@@ -6,7 +6,6 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
-
 -- set leader key to space
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -21,6 +20,8 @@ vim.g.loaded_netrwPlugin = 1
 
 -- UI
 vim.opt.hls = false
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.showmode = false
 vim.opt.updatetime = 100
 vim.opt.termguicolors = true
@@ -37,15 +38,17 @@ vim.opt.cursorline = true
 vim.opt.swapfile = false
 vim.opt.undofile = true
 
--- case options
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
 -- spell options
 vim.opt.spelllang = {"fr"}
 
 -- recommend options from auto-session
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+-- enable exrc files
+vim.o.exrc = true
+
+-- enable vim filetypes detection
+vim.cmd("filetype plugin indent on")
 
 --
 -- LOAD PLUGINS

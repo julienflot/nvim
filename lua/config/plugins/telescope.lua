@@ -12,7 +12,12 @@ return {
                 ["ui-select"] = {
                     require("telescope.themes").get_cursor({})
                 }
-            }
+            },
+            pickers = {
+                find_files = {
+                    -- no_ignore = true,
+                }
+            },
         })
 
         telescope.load_extension("scope")

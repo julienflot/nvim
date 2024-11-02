@@ -10,16 +10,39 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
+-- user command for toggling auto formatting on save
+vim.api.nvim_create_user_command("FormatToggle", function(args)
+    vim.g.disable_auto_format = not vim.g.disable_auto_format
+    vim.b.disable_auto_format = not vim.b.disable_auto_format
+end, {
+    desc = "Toggle auto formattings",
+    bang = false
+})
+
+local function on_attach(_, bufnr)
+    -- little helper for keymaps
+    local map = function(keybinding, action)
+        vim.keymap.set("n", keybinding, action, { silent = true, buffer = bufnr })
+    end
+
+    local builtin_telescope = require('telescope.builtin')
+
+    map("gd", vim.lsp.buf.definition)
+    map("gD", builtin_telescope.lsp_definitions)
+    map("<leader>gi", builtin_telescope.lsp_implementations)
+    map("<leader>lr", builtin_telescope.lsp_references)
+    map("<leader>lf", vim.lsp.buf.format)
+    map("<leader>la", vim.lsp.buf.code_action)
+    map("<leader>li", "<cmd>LspInfo<cr>")
+    map("<F2>", vim.lsp.buf.rename)
+    map("K", vim.lsp.buf.hover)
+end
+
 return {
     {
         "williamboman/mason.nvim",
         opts = {
-            ensure_installed = { "clangd", "rust_analyzer", "lua_ls" }
-        }
-    },
-    {
-        "williamboman/mason.nvim",
-        opts = {
+            ensure_installed = { "clangd", "rust_analyzer", "lua_ls" },
             ui = {
                 icons = {
                     package_installed = "✓",
@@ -28,6 +51,10 @@ return {
                 }
             }
         }
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        config = true
     },
     {
         'hrsh7th/nvim-cmp',
@@ -96,28 +123,9 @@ return {
             local lsp = require("lspconfig")
             local cmp = require("cmp")
 
-            local capabilities =
-            require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            local capabilities = 
+                require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
             local lsp_config = require('lspconfig')
-
-            local function on_attach(_, bufnr)
-                -- little helper for keymaps
-                local map = function(keybinding, action)
-                    vim.keymap.set("n", keybinding, action, { silent = true, buffer = bufnr })
-                end
-
-                local builtin_telescope = require('telescope.builtin')
-
-                map("gd", vim.lsp.buf.definition)
-                map("gD", builtin_telescope.lsp_definitions)
-                map("<leader>gi", builtin_telescope.lsp_implementations)
-                map("<leader>lr", builtin_telescope.lsp_references)
-                map("<leader>lf", vim.lsp.buf.format)
-                map("<leader>la", vim.lsp.buf.code_action)
-                map("<leader>li", "<cmd>LspInfo<cr>")
-                map("<F2>", vim.lsp.buf.rename)
-                map("K", vim.lsp.buf.hover)
-            end
 
             lsp.clangd.setup({
                 on_attach = on_attach,
@@ -133,12 +141,70 @@ return {
                 single_file_support = true,
                 on_attach = on_attach,
                 capabilities = capabilities,
+                settings = {
+                    semanticTokens = "disable",
+                },
             })
 
             lsp.pylsp.setup({
                 on_attach = on_attach,
                 capabilities = capabilities
             })
+
+            lsp.ts_ls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities
+            })
+
+            -- installed via npm
+            lsp.html.setup({
+                on_attach = on_attach,
+                capabilities = capabilities
+            })
+            lsp.cssls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities
+            })
+
+            lsp.nextls.setup({
+                cmd = { vim.fn.expand("~/.elixir/nextls"), "--stdio" },
+                cmd_env = {
+                    NEXTLS_SPITFIRE_ENABLED = 1
+                },
+                init_options = {
+                    extensions = {
+                        credo = { enable = true }
+                    },
+                    experimental = {
+                        completions = { enable = true }
+                    }
+                },
+                on_attach = on_attach,
+                capabilities = capabilities
+            })
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    client.server_capabilities.semanticTokensProvider = nil
+                end,
+            })
         end
     },
+    {
+        'stevearc/conform.nvim',
+        opts = {
+            formatters_by_ft = {
+                javascript = { "prettier" }
+            },
+            format_on_save = function(bufnr)
+                if vim.g.disable_auto_format or vim.b[bufnr].disable_auto_format then
+                    return
+                else 
+                    return { lsp_format = "fallback" }
+                end
+            end
+        },
+    },
+    on_attach = on_attach
 }

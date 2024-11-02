@@ -53,7 +53,7 @@ return {
         end,
         keys = {
             {"<leader>ot", "<cmd>ToggleTerm direction=float<cr>"},
-            {"<leader>oT", "<cmd>ToggleTerm direction=vertical<cr>"},
+            {"<leader>oT", "<cmd>ToggleTerm direction=vertical size="..tostring(require("math").floor(vim.fn.winwidth(0) / 2)) .. "<cr>"},
         }
     },
     {
@@ -73,5 +73,10 @@ return {
     {
         "j-hui/fidget.nvim",
         opts = {},
+    },
+    {
+        "barrett-ruth/live-server.nvim",
+        cmd = { 'LiveServerStart', 'LiveServerStop' },
+        opts = {}
     }
 }
