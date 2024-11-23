@@ -7,16 +7,22 @@ return {
     lazy = false,
     config = function()
         local telescope = require("telescope")
+        local themes = require("telescope.themes")
         telescope.setup({
             extensions = {
                 ["ui-select"] = {
-                    require("telescope.themes").get_cursor({})
+                    themes.get_cursor({})
                 }
             },
+            defaults = themes.get_ivy ({
+                layout_config = {
+                    height = 0.25
+                },
+            }),
             pickers = {
-                find_files = {
-                    -- no_ignore = true,
-                }
+                buffers = {
+                    preview = false ,
+                },
             },
         })
 
@@ -24,10 +30,10 @@ return {
         telescope.load_extension("ui-select")
     end,
     keys = {
-        { "<leader>ff", "<cmd>Telescope find_files<cr>" },
+        { "<leader>ff", "<cmd>Telescope find_files theme=ivy<cr>" },
         { "<leader>fb", "<cmd>Telescope buffers<cr>" },
         { "<leader>fs", "<cmd>Telescope treesitter<cr>" },
         { "<leader>fp", "<cmd>Telescope live_grep<cr>" }, 
-        { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
+        { "<leader>fh", "<cmd>Telescope help_tags theme=ivy<cr>" },
     }
 } 

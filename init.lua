@@ -27,7 +27,7 @@ vim.opt.updatetime = 100
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.breakindent = true
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 0
 -- activate numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -61,4 +61,4 @@ require("config.lazy")
 require("mappings")
 
 -- set colorscheme
-vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme catppuccin-latte")

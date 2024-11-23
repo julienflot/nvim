@@ -166,19 +166,8 @@ return {
                 capabilities = capabilities
             })
 
-            lsp.nextls.setup({
-                cmd = { vim.fn.expand("~/.elixir/nextls"), "--stdio" },
-                cmd_env = {
-                    NEXTLS_SPITFIRE_ENABLED = 1
-                },
-                init_options = {
-                    extensions = {
-                        credo = { enable = true }
-                    },
-                    experimental = {
-                        completions = { enable = true }
-                    }
-                },
+            lsp.elixirls.setup({
+                cmd = { vim.fn.expand("~/.elixir/elixirls/language_server.sh") },
                 on_attach = on_attach,
                 capabilities = capabilities
             })
