@@ -23,7 +23,7 @@ vim.opt.hls = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.showmode = false
-vim.opt.updatetime = 100
+vim.opt.updatetime = 50
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.breakindent = true
@@ -49,6 +49,10 @@ vim.o.exrc = true
 
 -- enable vim filetypes detection
 vim.cmd("filetype plugin indent on")
+
+-- disable displaying diangnostics errors in the buffer
+vim.diagnostic.config({ virtual_text = false })
+vim.g.background = 'light'
 
 --
 -- LOAD PLUGINS

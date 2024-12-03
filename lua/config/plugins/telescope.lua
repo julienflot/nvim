@@ -35,5 +35,6 @@ return {
         { "<leader>fs", "<cmd>Telescope treesitter<cr>" },
         { "<leader>fp", "<cmd>Telescope live_grep<cr>" }, 
         { "<leader>fh", "<cmd>Telescope help_tags theme=ivy<cr>" },
+        { "<leader>fd", "<cmd>Telescope diagnostics theme=ivy<cr>" },
     }
 } 
