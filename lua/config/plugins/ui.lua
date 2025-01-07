@@ -36,7 +36,10 @@ return {
                 lualine_a = {
                     {
                         'mode',
-                        color = { gui = "bold" }
+                        color = { gui = "bold" },
+                        fmt = function(text)
+                            return text:sub(1, 1)
+                        end
                     }
                 },
                 lualine_b = {

@@ -13,7 +13,6 @@ return {
                 ensure_installed = { "c", "rust", "lua", "vimdoc" },
                 highlight = {
                     enable = true,
-                    disable = { "typst" }
                 },
                 indent = {
                     enable = true
@@ -26,6 +25,18 @@ return {
                         keymaps = {
                             ["af"] = "@function.outer",
                             ["if"] = "@function.inner",
+
+                            ["ib"] = "@block.inner",
+                            ["ab"] = "@block.outer",
+
+                            ["ii"] = "@conditional.inner",
+                            ["ai"] = "@conditional.outer",
+
+                            ["il"] = "@loop.inner",
+                            ["al"] = "@loop.outer",
+
+                            ["ia"] = "@parameter.inner",
+                            ["aa"] = "@parameter.outer",
                         }
                     }
                 }

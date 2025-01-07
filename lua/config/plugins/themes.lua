@@ -26,7 +26,7 @@ return {
             no_bold = false,
             styles = {
                 comments = { "italic" },
-                keywords = { "bold", "italic" }
+                keywords = { "bold" }
             },
         }
     },
