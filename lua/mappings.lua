@@ -34,4 +34,4 @@ local toggle_spell = function()
     vim.opt.spell = not vim.opt.spell._value
 end
 map("n", "<F5>", toggle_spell)
-map("n", "<leader>ss", "<cmd>Telescope spell_suggest theme=dropdown<cr>")
+map("n", "<leader>ss", "<cmd>Telescope spell_suggest theme=ivy<cr>")

@@ -50,8 +50,7 @@ vim.o.exrc = true
 -- enable vim filetypes detection
 vim.cmd("filetype plugin indent on")
 
--- disable displaying diangnostics errors in the buffer
-vim.diagnostic.config({ virtual_text = false })
+-- set default background style to light
 vim.g.background = 'light'
 
 --
