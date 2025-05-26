@@ -11,7 +11,7 @@ for type, icon in pairs(signs) do
 end
 
 -- user command for toggling auto formatting on save
-vim.api.nvim_create_user_command("FormatToggle", function(args)
+vim.api.nvim_create_user_command("FormatToggle", function(_)
     vim.g.disable_auto_format = not vim.g.disable_auto_format
     vim.b.disable_auto_format = not vim.b.disable_auto_format
 end, {
@@ -99,7 +99,8 @@ return {
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
                     format = function(entry, vim_item)
-                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry,
+                            vim_item)
                         local strings = vim.split(kind.kind, "%s", { trimempty = true })
                         kind.kind = " " .. (strings[1] or "") .. " "
                         kind.menu = "    (" .. (strings[2] or "") .. ")"
@@ -111,7 +112,7 @@ return {
 
             cmp.setup.cmdline('/', {
                 sources = {
-                    {name = "buffer"}
+                    { name = "buffer" }
                 }
             })
         end
@@ -120,63 +121,48 @@ return {
         "neovim/nvim-lspconfig",
         lazy = false,
         config = function()
-            local lsp = require("lspconfig")
-            local cmp = require("cmp")
-
-            local capabilities = 
-                require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-            local lsp_config = require('lspconfig')
-
-            lsp.clangd.setup({
+            vim.lsp.config('lua_ls', {
                 on_attach = on_attach,
-                capabilities = capabilities,
-            })
-
-            lsp.rust_analyzer.setup({
-                on_attach = on_attach,
-                capabilities = capabilities,
-            })
-
-            lsp.tinymist.setup({
-                single_file_support = true,
-                on_attach = on_attach,
-                capabilities = capabilities,
-                settings = {
-                    semanticTokens = "disable",
-                },
-            })
-
-            lsp.pylsp.setup({
-                on_attach = on_attach,
-                capabilities = capabilities
-            })
-
-            lsp.ts_ls.setup({
-                on_attach = on_attach,
-                capabilities = capabilities
-            })
-
-            -- installed via npm
-            lsp.html.setup({
-                on_attach = on_attach,
-                capabilities = capabilities
-            })
-            lsp.cssls.setup({
-                on_attach = on_attach,
-                capabilities = capabilities
-            })
-
-            lsp.elixirls.setup({
-                cmd = { vim.fn.expand("~/.elixir/elixirls/language_server.sh") },
-                on_attach = on_attach,
-                capabilities = capabilities
-            })
-
-            vim.api.nvim_create_autocmd("LspAttach", {
-                callback = function(args)
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    client.server_capabilities.semanticTokensProvider = nil
+                on_init = function(client)
+                    client.config.settings.Lua = {
+                        runtime = {
+                            version = "LuaJIT",
+                            path = {
+                                "lua/?.lua",
+                                "lua/?/init.lua",
+                            }
+                        },
+                        workspace = {
+                            checkThirdParty = true,
+                            library = {
+                                vim.env.VIMRUNTIME
+                            }
+                        }
+                    }
                 end,
+                settings = {
+                    Lua = {}
+                }
+            })
+
+            vim.lsp.config('clangd', {
+                on_attach = on_attach
+            })
+
+            vim.lsp.config('rust_analyzer', {
+                on_attach = on_attach
+            })
+
+            vim.lsp.config('tinymist', {
+                on_attach = on_attach,
+                single_file_support = true,
+                settings = {
+                    semanticTokens = "disable"
+                }
+            })
+
+            vim.lsp.config('pylsp', {
+                on_attach = on_attach
             })
         end
     },
@@ -189,7 +175,7 @@ return {
             format_on_save = function(bufnr)
                 if vim.g.disable_auto_format or vim.b[bufnr].disable_auto_format then
                     return
-                else 
+                else
                     return { lsp_format = "fallback" }
                 end
             end

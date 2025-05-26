@@ -1,5 +1,5 @@
 local map = function(mode, mapping, cmd)
-    opts = {silent = true}
+    local opts = { silent = true }
     vim.keymap.set(mode, mapping, cmd, opts)
 end
 

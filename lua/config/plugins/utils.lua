@@ -8,7 +8,7 @@ return {
 
             local Rule = require("nvim-autopairs.rule")
             npairs.add_rule(Rule("$", "$", "typst"))
-            npairs.add_rule(Rule("/*", "*/", {"c", "cpp"}))
+            npairs.add_rule(Rule("/*", "*/", { "c", "cpp" }))
         end
     },
     {
@@ -41,7 +41,7 @@ return {
 
             -- enable closing the termial with double touch to escape
             function _G.set_terminal_keymaps()
-                vim.api.nvim_buf_set_keymap(0, "n", "<esc>", "<cmd>ToggleTerm<cr>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(0, "n", "<esc>", "<cmd>ToggleTerm<cr>", { noremap = true, silent = true })
             end
 
             local group = vim.api.nvim_create_augroup("ToggleTerm", {})
@@ -52,8 +52,8 @@ return {
             })
         end,
         keys = {
-            {"<leader>ot", "<cmd>ToggleTerm direction=float<cr>"},
-            {"<leader>oT", "<cmd>ToggleTerm direction=vertical size="..tostring(require("math").floor(vim.fn.winwidth(0) / 2)) .. "<cr>"},
+            { "<leader>ot", "<cmd>ToggleTerm direction=float<cr>" },
+            { "<leader>oT", "<cmd>ToggleTerm direction=vertical size=" .. tostring(require("math").floor(vim.fn.winwidth(0) / 2)) .. "<cr>" },
         }
     },
     {
@@ -67,7 +67,7 @@ return {
             }
         },
         keys = {
-            {"<leader>os", "<cmd>Telescope session-lens<cr>"}
+            { "<leader>os", "<cmd>Telescope session-lens<cr>" }
         }
     },
     {

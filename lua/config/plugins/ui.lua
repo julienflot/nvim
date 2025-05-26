@@ -2,7 +2,7 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
-        opts = {} 
+        opts = {}
     },
     {
         'nvim-lualine/lualine.nvim',
@@ -29,22 +29,22 @@ return {
                         'branch',
                         icon = '',
                         color = { gui = "bold" }
-                    }, 
+                    },
                     'diff', 'diagnostics'
                 },
                 lualine_c = {
-                    {"%="},
+                    { "%=" },
                     { "buffers" }
                 },
-                lualine_x = {'filetype'},
-                lualine_y = {'progress'},
-                lualine_z = {'location'}
+                lualine_x = { 'filetype' },
+                lualine_y = { 'progress' },
+                lualine_z = { 'location' }
             },
             inactive_sections = {
                 lualine_a = {},
                 lualine_b = {},
-                lualine_c = {'filename'},
-                lualine_x = {'location'},
+                lualine_c = { 'filename' },
+                lualine_x = { 'location' },
                 lualine_y = {},
                 lualine_z = {}
             },
@@ -74,7 +74,7 @@ return {
             }
         },
         keys = {
-            {"<leader>zz", "<cmd>ZenMode<cr>"}
+            { "<leader>zz", "<cmd>ZenMode<cr>" }
         }
     }
 }

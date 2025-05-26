@@ -1,6 +1,6 @@
 return {
     "nvim-telescope/telescope.nvim",
-    dependencies = { 
+    dependencies = {
         "nvim-lua/plenary.nvim",
         'nvim-telescope/telescope-ui-select.nvim'
     },
@@ -14,14 +14,14 @@ return {
                     themes.get_cursor({})
                 }
             },
-            defaults = themes.get_ivy ({
+            defaults = themes.get_ivy({
                 layout_config = {
                     height = 0.25
                 },
             }),
             pickers = {
                 buffers = {
-                    preview = false ,
+                    preview = false,
                 },
             },
         })
@@ -33,8 +33,8 @@ return {
         { "<leader>ff", "<cmd>Telescope find_files theme=ivy<cr>" },
         { "<leader>fb", "<cmd>Telescope buffers<cr>" },
         { "<leader>fs", "<cmd>Telescope treesitter<cr>" },
-        { "<leader>fp", "<cmd>Telescope live_grep<cr>" }, 
+        { "<leader>fp", "<cmd>Telescope live_grep<cr>" },
         { "<leader>fh", "<cmd>Telescope help_tags theme=ivy<cr>" },
         { "<leader>fd", "<cmd>Telescope diagnostics theme=ivy<cr>" },
     }
-} 
+}

@@ -2,7 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         dependencies = {
-            "nvim-treesitter/nvim-treesitter-textobjects", 
+            "nvim-treesitter/nvim-treesitter-textobjects",
         },
         build = ":TSUpdate",
         config = function()
@@ -43,7 +43,7 @@ return {
             })
         end
     },
-    { 
+    {
         "windwp/nvim-ts-autotag",
         opts = {}
     },

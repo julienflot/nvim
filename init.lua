@@ -53,6 +53,9 @@ vim.cmd("filetype plugin indent on")
 -- set default background style to light
 vim.g.background = 'light'
 
+-- activate virtual text for diagnostics
+vim.diagnostic.config({ virtual_text = true })
+
 --
 -- LOAD PLUGINS
 --
